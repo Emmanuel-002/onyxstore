@@ -1,0 +1,63 @@
+html 
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0") 
+        link(rel="stylesheet", href="/assets/css/bootstrap.min.css")
+        link(rel="stylesheet", href="/assets/icons")
+        link(rel="stylesheet", href="/assets/css/style.css")
+        script(src="/assets/js/bootstrap.min.js")
+        title Admin | Profile
+    body
+        div
+            include partials/navbar
+            div(class="container-sm text-center")
+                div(class="media my-4")
+                    if user.photo.image.data
+                        img(class="align-self-start mr-3" src=`data:${user.photo.image.contentType};base64,${Buffer.from(user.photo.image.data).toString('base64')}` alt=`${user.fullname}` width="100px" height="100px") 
+                    div(class="media-body")
+                        h5(class="mt-0")=`${user.fullname}`
+                        p=user.email
+                        p=new Date(user.lastLoggedIn).toLocaleString()
+                        p(class="profile-action")
+                            button(type="button" data-bs-toggle="modal" data-bs-target="#updateModal" class="btn btn-success") Update
+                            button(type="button" data-bs-toggle="modal" data-bs-target="#uploadPictureModal" class="btn btn-success") Upload Picture
+                            button(type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-danger") Delete
+            div(class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true")
+                div(class="modal-dialog")
+                    div(class="modal-content")
+                        div(class="modal-header")
+                            h1(class="modal-title fs-5" id="exampleModalLabel") Admin Profile
+                            button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                        div(class="modal-body")
+                            form(action=`/admin/update/${user.id}` method="POST")
+                                div(class="input-group flex-nowrap mb-4")
+                                    input(type="text" value=`${user.fullname}` name="fullname" required class="form-control" placeholder="Full Name" aria-label="fullname" aria-describedby="addon-wrapping")
+                                div(class="input-group flex-nowrap mb-4")
+                                    input(type="email" value=`${user.email}` name="email" required class="form-control" placeholder="Email" aria-label="Email" aria-describedby="addon-wrapping")
+                                div(class="modal-footer")
+                                    button(type="submit" class="btn btn-success") Update
+                                    div(class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true")
+            div(class="modal fade" id="uploadPictureModal" tabindex="-1" aria-labelledby="uploadPictureModalLabel" aria-hidden="true")
+                div(class="modal-dialog")
+                    div(class="modal-content")
+                        div(class="modal-header")
+                            h1(class="modal-title fs-5" id="exampleModalLabel") Upload Picture
+                            button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                        div(class="modal-body")
+                            form(action=`/admin/upload/picture/${user.id}` method="POST" enctype="multipart/form-data")
+                                div(class="input-group flex-nowrap mb-4")
+                                    input(type="file" name="photo" accept="image/*" required class="form-control" placeholder="Photo" aria-label="photo" aria-describedby="addon-wrapping")
+                                div(class="modal-footer")
+                                    button(type="submit" class="btn btn-success") Upload
+            div(class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true")
+                div(class="modal-dialog")
+                    div(class="modal-content")
+                        div(class="modal-header")
+                            h1(class="modal-title fs-5" id="exampleModalLabel") Admin Profile
+                            button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                        div(class="modal-body")
+                            form(action=`/admin/delete/${user.id}` method="POST")
+                                div(class="input-group flex-nowrap mb-4") Are you sure you want to delete? 
+                                div(class="modal-footer")
+                                    button(type="submit" class="btn btn-danger") Confirm Delete
+        include partials/footer

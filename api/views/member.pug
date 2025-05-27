@@ -1,0 +1,164 @@
+html 
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0") 
+        link(rel="stylesheet", href="/assets/css/bootstrap.min.css")
+        link(rel="stylesheet", href="/assets/css/dataTables.bootstrap5.css")
+        link(rel="stylesheet", href="/assets/icons")
+        link(rel="stylesheet", href="/assets/css/style.css")
+        script(defer src="/assets/js/bootstrap.min.js")
+        script(defer src="/assets/js/bootstrap.bundle.min.js")
+        script(defer src="/assets/js/dataTables.js")
+        script(defer src="/assets/js/dataTables.bootstrap5.js")
+        script(defer src="/assets/js/script.js")
+        script(defer src="https://code.jquery.com/jquery-3.5.1.js")
+        title=`Profile | ${member.fullname}`
+    body 
+        div 
+            include partials/navbar
+            div(class="container-sm mt-4")
+                div(class="row g-2")
+                    div(class="col-lg-6 col-md-12 col-sm-12")
+                        div(class="card-media" style="width: 100%")
+                            if member.photo.image.data
+                                img(class="align-self-start mr-3" src=`data:${member.photo.image.contentType};base64,${Buffer.from(member.photo.image.data).toString('base64')}` alt=`${member.fullname}` width="100px" height="100px") 
+                            else 
+                                img(class="align-self-start mr-3" alt="No Picture")
+                
+                    div(class="product-table col-lg-6 col-md-12 col-sm-12" style="overflow-x: auto")
+                        table(id="example" class="table table-hover table-bordered table-striped")
+                            tbody 
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Member ID</strong>
+                                    td(class="mx-2")=member.memberId
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Full Name</strong>
+                                    td(class="mx-2")=member.fullname
+                                if(member.svcno)
+                                    tr
+                                        td(class="mx-2")
+                                            <strong>Service Number</strong>
+                                        td(class="mx-2")=member.svcno
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Unit</strong>
+                                    td(class="mx-2")=member.unit
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Email</strong>
+                                    td(class="mx-2")=member.email
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Marital Status</strong>
+                                    td(class="mx-2")=member.maritalstatus
+                                if(member.spousename)
+                                    tr
+                                        td(class="mx-2")
+                                            <strong>Spouse Name</strong>
+                                        td(class="mx-2")=member.spousename
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Next of Kin</strong>
+                                    td(class="mx-2")=`${member.nokname}, ${member.nokrelationship}`
+                                tr
+                                    td(class="mx-2")
+                                        <strong>State of Origin</strong>
+                                    td(class="mx-2")=member.stateoforigin
+                                tr
+                                    td(class="mx-2")
+                                        <strong>LGA</strong>
+                                    td(class="mx-2")=member.lga
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Address</strong>
+                                    td(class="mx-2")=member.address
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Bank Name</strong>
+                                    td(class="mx-2")=member.userbank
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Account Number</strong>
+                                    td(class="mx-2")=member.useraccount
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Account Name</strong>
+                                    td(class="mx-2")=member.accountname
+                                tr
+                                    td(class="mx-2")
+                                        <strong>Monthly Deduction</strong>
+                                    td(class="mx-2")=member.amount
+                            //- p(class="profile-action")
+                            //-     button(type="button" data-bs-toggle="modal" data-bs-target="#productFormModal" class="btn btn-success") Update
+                            //-     button(type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-danger") Delete
+            //- div(class="modal fade" id="productFormModal" tabindex="-1" aria-labelledby="productFormModalLabel" aria-hidden="true")
+            //-     div(class="modal-dialog")
+            //-         div(class="modal-content")
+            //-             div(class="modal-header")
+            //-                 h1(class="modal-title fs-5" id="exampleModalLabel") Update Product
+            //-                 button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+            //-             div(class="modal-body")
+            //-                 form(action=`/admin/product/update/${product.id}` method="POST")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3 w-10" for="product-code") Product Code
+            //-                         input(type="text" value=`${product.code}` id="product-code"  disabled class="form-control" placeholder="Product Code" aria-label="code" aria-describedby="addon-wrapping")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="name") Name
+            //-                         input(type="text" value=`${product.name}` id="name" name="name" required class="form-control" placeholder="Name" aria-label="name" aria-describedby="addon-wrapping")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="brand") Brand
+            //-                         input(type="text" value=`${product.brand}` id="brand" name="brand" required class="form-control" placeholder="Brand" aria-label="brand" aria-describedby="addon-wrapping")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="category") Category
+            //-                         select(id="category" name="category" required class="form-control" placeholder="Category" aria-label="category" aria-describedby="addon-wrapping") 
+            //-                             option(value="") Select Category
+            //-                             option(value="Beauty and Care") Beauty and Care
+            //-                             option(value="Baby Products") Baby Products 
+            //-                             option(value="Drink") Drink 
+            //-                             option(value="Fashion") Fashion 
+            //-                             option(value="Furniture") Furniture 
+            //-                             option(value="Food") Food 
+            //-                             option(value="Toys and Hobbies") Toys and Hobbies 
+            //-                             option(value="Household Essentials") Household Essentials 
+            //-                             option(value="Consumer Electronics") Consumer Electronics 
+            //-                             option(value="Apparel and Accessories") Apparel and Accessories 
+            //-                             option(value="Books") Books 
+            //-                             option(value="Stationary") Stationary 
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="cost") Cost
+            //-                         input(type="number" value=`${product.cost}` id="cost" name="cost" required class="form-control" placeholder="Cost" aria-label="cost" aria-describedby="addon-wrapping")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="image") Image
+            //-                         input(type="file" value=`${product.image}` id="image" name="image" accept="image/*"  class="form-control" placeholder="Image" aria-label="image" aria-describedby="addon-wrapping")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="quantity") Quantity
+            //-                         input(type="number" value=`${product.quantity}` id="quantity" name="quantity" class="form-control" placeholder="Quantity" aria-label="quantity" aria-describedby="addon-wrapping")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="weight") Weight
+            //-                         input(type="number" value=`${product.weight}` id="weight" name="weight" required class="form-control" placeholder="Weight" aria-label="weight" aria-describedby="addon-wrapping")
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="description") Description
+            //-                         textarea(type="text" id="description" name="description" required class="form-control" placeholder="Description" aria-label="description" aria-describedby="addon-wrapping")=`${product.description}` 
+            //-                     div(class="mb-2")
+            //-                         label(class="me-3" for="status") Status
+            //-                         select(id="status" required name="status" class="form-control" placeholder="Status" aria-label="status" aria-describedby="addon-wrapping") 
+            //-                             option(value="") Select Status 
+            //-                             option(value="in stock") In stock 
+            //-                             option(value="not in stock") Not in stock
+            //-                     div(class="modal-footer")
+            //-                         button(type="submit" class="btn btn-warning") Submit
+            //- div(class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true")
+            //-     div(class="modal-dialog")
+            //-         div(class="modal-content")
+            //-             div(class="modal-header")
+            //-                 h1(class="modal-title fs-5" id="exampleModalLabel") Delete Product
+            //-                 button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+            //-             div(class="modal-body")
+            //-                 form(action=`/admin/product/delete/${product.id}` method="POST")
+            //-                     div(class="input-group flex-nowrap mb-4")=`Are you sure you want to delete ${product.name}` 
+            //-                     div(class="modal-footer")
+            //-                         button(type="submit" class="btn btn-danger") Confirm Delete
+        include partials/footer
+

@@ -1,0 +1,49 @@
+.home-body{
+    /* background-image: url('../images/kainjiCooperativeLogo.jpg'); */
+    background-attachment: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-height: 100vh;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: space-between;
+    height: 100vh;
+}
+footer{
+    margin: 0.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.navbar-brand img{
+    border-radius: 50%;
+}
+.nav-btn:hover{
+    font-weight: bold;
+    text-decoration: underline;
+}
+.dashboard-panel a{
+    text-decoration: none;
+    text-align: center;
+}
+.dashboard-panel .card{
+    border: none;
+    transition: all 500ms ease-in-out;
+}
+.dashboard-panel .card:hover{
+    transform: scale(1.02)
+}
+.welcome-block{
+    display: flex;
+    justify-content: space-between;
+    /* gap: 3; */
+    /* background-color: #1da1f2; */
+}
+.profile-action button{
+    margin: 3px;
+}
+.currency::before{
+    content: '\20A6';
+}
